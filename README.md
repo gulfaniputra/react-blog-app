@@ -1,73 +1,71 @@
-# React + TypeScript + Vite
+# react-blog-app
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Table Of Contents
 
-Currently, two official plugins are available:
+- [About](#about)
+- [Description](#description)
+- [Stack](#stack)
+- [Plan](#plan)
+- [Features](#features)
+- [Demo](#demo)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## About
 
-## React Compiler
+A simple React blog.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Description
 
-## Expanding the ESLint configuration
+This project is a clean, scalable application demonstrating modern front-end development patterns using React, TypeScript, and a best-in-class supporting ecosystem. It focuses on integrating an external API, managing state, and handling complex forms.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Key Exploration Topics
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Server state vs. UI state
+- One-way data flow
+- Formik for control
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Stack
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- React
+- Vite
+- TypeScript
+- pnpm
+- React Query
+- Formik
+- shadcn
+- JSONPlaceholder
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Plan
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Step #0 (Mockups & JSON API):
+  - Mockups: [Homepage](https://gist.github.com/user-attachments/assets/11832f53-e0d0-42d3-87e8-d995a2533362), ['Create Post' button](https://gist.github.com/user-attachments/assets/8f69d9ab-ea45-49e2-92e3-7f2f253053c1), & [Post card dialog](https://gist.github.com/user-attachments/assets/2c175678-b157-4f2e-8620-c2a1bbd41f74)
+  - JSON API: https://jsonplaceholder.typicode.com/
+- Step #1 (Break the UI into a component hierarchy):
+  - Homepage:
+    - Header
+    - PostList:
+      - PostCard
+  - 'Create Post' button dialog:
+    - CreatePostDialog
+      - CreatePostForm
+        - FormField:
+          - Input
+          - Textarea
+        - FormActions
+  - Post card view dialog:
+    - ViewPostDialog:
+      - PostDetails:
+        - PostTitle
+        - PostBody
+        - CloseButton
+- Step #2 (Build a static version in React):
+  - `// In progress...`
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Features
+
+- **Homepage**: Fetches and displays a list of all posts using the `GET /posts` API endpoint. Each post is rendered as an interactive **Card** component.
+- **Create New Post**: A dedicated button in the header triggers a **Dialog** (modal). The form uses Formik to handle input for the title and description, submitting the data via the `POST /posts` endpoint.
+- **View Post Details**: Clicking on any post card opens a **Dialog** that fetches and displays the full details of that specific post using the `GET /posts/:id` endpoint.
+
+## Demo
+
+`// In progress...`
