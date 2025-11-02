@@ -1,5 +1,4 @@
-// src/components/PostList.tsx
-import type { Post, MOCK_POSTS } from '../types';
+import type { Post } from '../types';
 import { PostCard } from './PostCard';
 
 interface PostListProps {
