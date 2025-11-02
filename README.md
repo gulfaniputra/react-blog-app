@@ -58,6 +58,14 @@ This project is a clean, scalable application demonstrating modern front-end dev
         - PostBody
         - CloseButton
 - Step #2 (Build a static version in React):
+  - Set up data structure & mock data (`types.ts`).
+  - Create component for a single post (`PostCard.tsx`).
+  - Create component for top navigation bar (`Header.tsx`).
+  - Create components for placeholder dialogs (`CreatePostDialog.tsx` & `ViewPostDialog.tsx`).
+  - Create component to render the grid of posts (`PostList.tsx`).
+  - Create a page to put everything together (`HomePage.tsx`).
+  - Update the entry point’s configuration (`App.tsx`).
+- Step #3 (Find the minimal but complete representation of UI state):
   - `// In progress...`
 
 ## Features
