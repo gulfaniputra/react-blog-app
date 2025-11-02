@@ -1,11 +1,5 @@
-import './App.css';
+import { HomePage } from './pages/HomePage';
 
-function App() {
-  return (
-    <>
-      <h1>react-blog-app</h1>
-    </>
-  );
+export default function App() {
+  return <HomePage />;
 }
-
-export default App;
