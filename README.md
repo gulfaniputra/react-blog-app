@@ -76,4 +76,4 @@ This project is a clean, scalable application demonstrating modern front-end dev
 
 ## Demo
 
-`// In progress...`
+https://react-blog-app-task3.vercel.app/
