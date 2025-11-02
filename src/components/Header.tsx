@@ -7,7 +7,7 @@ interface HeaderProps {
 export function Header({ onCreatePostClick }: HeaderProps) {
   return (
     <header className="flex justify-between items-center p-4 bg-gray-900 text-white shadow-md">
-      <h1 className="text-2xl font-bold">TypeScript Blog App</h1>
+      <h1 className="text-2xl font-bold">React Blog App</h1>
       <Button
         variant="default"
         onClick={onCreatePostClick}
