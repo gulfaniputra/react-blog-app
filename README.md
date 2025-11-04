@@ -65,7 +65,12 @@ This project is a clean, scalable application demonstrating modern front-end dev
   - Create component to render the grid of posts (`PostList.tsx`).
   - Create a page to put everything together (`HomePage.tsx`).
   - Update the entry point’s configuration (`App.tsx`).
-- Step #3 (Find the minimal but complete representation of UI state):
+- Step #3 (Set up API state with React Query):
+  - Initialize `QueryClient`.
+  - Create a utility file for API fetching logic.
+  - Integrate `useQuery`to fetch all posts.
+  - Integrate `useQuery` to fetch a single post.
+- Step #4 (Set up form state with Formik):
   - `// In progress...`
 
 ## Features
