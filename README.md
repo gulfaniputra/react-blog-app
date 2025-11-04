@@ -71,6 +71,11 @@ This project is a clean, scalable application demonstrating modern front-end dev
   - Integrate `useQuery`to fetch all posts.
   - Integrate `useQuery` to fetch a single post.
 - Step #4 (Set up form state with Formik):
+  - Create component to encapsulate Formik logic (`CreatePostForm.tsx`).
+  - Update `CreatePostDialog.tsx` to use the Formik form.
+  - Create a custom hook to place the mutation logic (`useCreatePost.ts`).
+  - Integrate mutation into `HomePage.tsx`.
+- Step #5 (Set up the back-end with JSONPlaceholder):
   - `// In progress...`
 
 ## Features
