@@ -1,24 +1,26 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from './ui/dialog';
-import { Input } from './ui/input';
-import { Textarea } from './ui/textarea';
-import { Button } from './ui/button';
-import { Label } from './ui/label';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
+import { CreatePostForm } from './CreatePostForm';
+import type { CreatePostPayload } from '../api/posts';
 
 interface CreatePostDialogProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
+  // Prop to handle the final submission with the form data
+  onPostCreate: (values: CreatePostPayload) => Promise<void>;
+  isSubmitting: boolean;
 }
 
 export function CreatePostDialog({
   isOpen,
   onOpenChange,
+  onPostCreate,
+  isSubmitting,
 }: CreatePostDialogProps) {
+  // Wrapper function to handle submission and close the dialog
+  const handleSubmit = async (values: CreatePostPayload) => {
+    await onPostCreate(values);
+  };
+
   return (
     <Dialog
       open={isOpen}
@@ -28,54 +30,12 @@ export function CreatePostDialog({
         <DialogHeader>
           <DialogTitle>Create New Post</DialogTitle>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label
-              htmlFor="title"
-              className="text-right"
-            >
-              Title
-            </Label>
-            <Input
-              id="title"
-              placeholder="Post Title"
-              className="col-span-3"
-              value="Static Title"
-              readOnly
-            />
-          </div>
-          <div className="grid grid-cols-4 items-start gap-4">
-            <Label
-              htmlFor="body"
-              className="text-right pt-2"
-            >
-              Description
-            </Label>
-            <Textarea
-              id="body"
-              placeholder="Post Body Content"
-              className="col-span-3"
-              rows={5}
-              value="Static Body Content"
-              readOnly
-            />
-          </div>
-        </div>
-        <DialogFooter>
-          {/* These buttons are static placeholders for now */}
-          <Button
-            variant="outline"
-            onClick={() => onOpenChange(false)}
-          >
-            Cancel
-          </Button>
-          <Button
-            type="submit"
-            disabled
-          >
-            Create Post (Static)
-          </Button>
-        </DialogFooter>
+
+        <CreatePostForm
+          onSubmit={handleSubmit}
+          onCancel={() => onOpenChange(false)}
+          isSubmitting={isSubmitting}
+        />
       </DialogContent>
     </Dialog>
   );
