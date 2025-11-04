@@ -17,7 +17,7 @@ export async function fetchPostById(id: number): Promise<Post> {
   if (!response.ok) {
     throw new Error(`Failed to fetch post with ID: ${id}`);
   }
-  return response.json();
+  return (await response.json()) as Post;
 }
 
 export interface CreatePostPayload {
@@ -40,6 +40,5 @@ export async function createPost(newPost: CreatePostPayload): Promise<Post> {
     throw new Error('Failed to create new post');
   }
 
-  // We cast the result to Post as the structure is similar
-  return response.json() as Post;
+  return (await response.json()) as Post;
 }

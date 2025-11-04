@@ -22,10 +22,7 @@ export function HomePage() {
 
       {/* 2. List of Posts Component */}
       <main>
-        <PostList
-          posts={MOCK_POSTS}
-          onPostSelect={handlePostSelect}
-        />
+        <PostList onPostSelect={handlePostSelect} />
       </main>
 
       {/* 3. Dialog Components*/}
@@ -37,7 +34,7 @@ export function HomePage() {
       <ViewPostDialog
         isOpen={isViewDialogOpen}
         onOpenChange={() => {}}
-        post={selectedPost}
+        selectedPostId={selectedPost?.id ?? null}
       />
     </div>
   );
