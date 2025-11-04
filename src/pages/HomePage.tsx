@@ -1,40 +1,65 @@
+import { useState } from 'react';
 import { Header } from '../components/Header';
 import { PostList } from '../components/PostList';
 import { CreatePostDialog } from '../components/CreatePostDialog';
 import { ViewPostDialog } from '../components/ViewPostDialog';
-import { MOCK_POSTS } from '../types';
+import { useCreatePost } from '../hooks/useCreatePost';
+import type { CreatePostPayload } from '../api/posts';
 
 export function HomePage() {
-  // Placeholder functions for props in the static version
-  const handleCreateClick = () => alert('Create button clicked (Static)');
-  const handlePostSelect = (postId: number) =>
-    alert(`Post ID ${postId} selected (Static)`);
+  // Minimal UI state identification for interactivity
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [selectedPostId, setSelectedPostId] = useState<number | null>(null);
 
-  // Static control for dialog visibility
-  const isCreateDialogOpen = false;
-  const isViewDialogOpen = false;
-  const selectedPost = MOCK_POSTS[0] || null;
+  // Use the custom mutation hook
+  const createPostMutation = useCreatePost();
+
+  // Handlers for dialogs and data flow
+  const handleCreatePostSubmit = async (values: CreatePostPayload) => {
+    try {
+      // Call the mutate function from React Query
+      await createPostMutation.mutateAsync(values);
+      setIsCreateDialogOpen(false);
+    } catch (error) {
+      // Error handling is managed inside useCreatePost hook
+    }
+  };
+
+  const handlePostSelect = (postId: number) => {
+    setSelectedPostId(postId);
+  };
+
+  const handleViewDialogClose = (open: boolean) => {
+    if (!open) {
+      setSelectedPostId(null);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* 1. Header Component */}
-      <Header onCreatePostClick={handleCreateClick} />
+      {/* Header component */}
+      <Header onCreatePostClick={() => setIsCreateDialogOpen(true)} />
 
-      {/* 2. List of Posts Component */}
+      {/* List of Posts component*/}
       <main>
-        <PostList onPostSelect={handlePostSelect} />
+        <PostList
+          onPostSelect={handlePostSelect} // Pass the handler to open the view dialog
+        />
       </main>
 
-      {/* 3. Dialog Components*/}
+      {/* Create Post dialog */}
       <CreatePostDialog
         isOpen={isCreateDialogOpen}
-        onOpenChange={() => {}}
+        onOpenChange={setIsCreateDialogOpen}
+        onPostCreate={handleCreatePostSubmit}
+        isSubmitting={createPostMutation.isPending}
       />
 
+      {/* View Post dialog */}
       <ViewPostDialog
-        isOpen={isViewDialogOpen}
-        onOpenChange={() => {}}
-        selectedPostId={selectedPost?.id ?? null}
+        isOpen={!!selectedPostId}
+        onOpenChange={handleViewDialogClose}
+        selectedPostId={selectedPostId}
       />
     </div>
   );
