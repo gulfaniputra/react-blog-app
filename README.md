@@ -75,8 +75,11 @@ This project is a clean, scalable application demonstrating modern front-end dev
   - Update `CreatePostDialog.tsx` to use the Formik form.
   - Create a custom hook to place the mutation logic (`useCreatePost.ts`).
   - Integrate mutation into `HomePage.tsx`.
-- Step #5 (Set up the back-end with JSONPlaceholder):
-  - `// In progress...`
+- Step #5 (Check if JSONPlaceholder is set up properly as the back-end):
+  - `src/api/posts.ts`:
+    - The `createPost` function handles the ‘create post’ requirement, including setting the `Content-Type: application/json` header, as required by JSONPlaceholder for POST requests.
+    - The `fetchPosts` function handles the ‘homepage list’ requirement, which correctly retrieves the list of posts.
+    - The `fetchPostById` function handles the ‘view specific post’ requirement, which correctly retrieves the details for the specific ID.
 
 ## Features
 
