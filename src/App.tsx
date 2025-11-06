@@ -4,9 +4,11 @@ import { PostDetailPage } from './pages/PostDetailPage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 export default function App() {
+  // Provide a default handler for 'Header'
+  const handleCreatePostClick = () => {};
   return (
     <Router>
-      <Header />
+      <Header onCreatePostClick={handleCreatePostClick} />
 
       <Routes>
         {/* Route for the homepage */}
