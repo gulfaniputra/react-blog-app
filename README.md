@@ -33,8 +33,11 @@ This project is a clean, scalable application demonstrating modern front-end dev
 - Formik
 - shadcn
 - JSONPlaceholder
+- React Router
 
 ## Plan
+
+### Task #3:
 
 - Step #0 (Mockups & JSON API):
   - Mockups: [Homepage](https://gist.github.com/user-attachments/assets/11832f53-e0d0-42d3-87e8-d995a2533362), ['Create Post' button](https://gist.github.com/user-attachments/assets/8f69d9ab-ea45-49e2-92e3-7f2f253053c1), & [Post card dialog](https://gist.github.com/user-attachments/assets/2c175678-b157-4f2e-8620-c2a1bbd41f74)
@@ -80,6 +83,27 @@ This project is a clean, scalable application demonstrating modern front-end dev
     - The `createPost` function handles the ‘create post’ requirement, including setting the `Content-Type: application/json` header, as required by JSONPlaceholder for POST requests.
     - The `fetchPosts` function handles the ‘homepage list’ requirement, which correctly retrieves the list of posts.
     - The `fetchPostById` function handles the ‘view specific post’ requirement, which correctly retrieves the details for the specific ID.
+
+### Task #4:
+
+- Step #1 (Implement post detailed view with data and comments):
+  - [Mockup](https://gist.github.com/user-attachments/assets/943c2267-48c2-4953-81bf-9a65dc2df80f)
+  - Components:
+    - `PostDetailPage`
+    - `PostDetailCard`
+    - `PostContent`
+    - `CommentsSection`
+    - `CommentItem`
+  - API mappings:
+    - `PostDetailCard` > `GET https://jsonplaceholder.typicode.com/posts/:postId`
+    - `CommentsSection` > `GET https://jsonplaceholder.typicode.com/posts/:postId/comments`
+  - Set up React Router.
+  - Create a function to fetch comments (`posts.ts`).
+  - Create a component to list comments (`CommentItem.tsx`).
+  - Create a page to fetch post and its comments (`PostDetailPage.tsx`).
+  - Update `App.tsx` to use React Router.
+  - Add React Router `Link` component to navigate to the detail page (`PostCard.tsx`).
+- `// In progress...`
 
 ## Features
 
