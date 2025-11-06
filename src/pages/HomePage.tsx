@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Header } from '../components/Header';
 import { PostList } from '../components/PostList';
 import { CreatePostDialog } from '../components/CreatePostDialog';
 import { ViewPostDialog } from '../components/ViewPostDialog';
@@ -21,7 +20,7 @@ export function HomePage() {
       await createPostMutation.mutateAsync(values);
       setIsCreateDialogOpen(false);
     } catch (error) {
-      // Error handling is managed inside useCreatePost hook
+      // Error handling is managed inside 'useCreatePost' hook
     }
   };
 
@@ -37,16 +36,10 @@ export function HomePage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header component */}
-      <Header onCreatePostClick={() => setIsCreateDialogOpen(true)} />
-
       {/* List of Posts component*/}
       <main>
-        <PostList
-          onPostSelect={handlePostSelect} // Pass the handler to open the view dialog
-        />
+        <PostList onPostSelect={handlePostSelect} />
       </main>
-
       {/* Create Post dialog */}
       <CreatePostDialog
         isOpen={isCreateDialogOpen}
@@ -54,7 +47,6 @@ export function HomePage() {
         onPostCreate={handleCreatePostSubmit}
         isSubmitting={createPostMutation.isPending}
       />
-
       {/* View Post dialog */}
       <ViewPostDialog
         isOpen={!!selectedPostId}
