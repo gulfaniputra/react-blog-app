@@ -42,3 +42,20 @@ export async function createPost(newPost: CreatePostPayload): Promise<Post> {
 
   return (await response.json()) as Post;
 }
+
+export interface Comment {
+  postId: number;
+  id: number;
+  name: string;
+  email: string;
+  body: string;
+}
+
+// GET comments for a specific post
+export async function fetchComments(postId: number): Promise<Comment[]> {
+  const response = await fetch(`${BASE_URL}/posts/${postId}/comments`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch comments for post ID: ${postId}`);
+  }
+  return response.json();
+}
