@@ -8,13 +8,17 @@ import {
   CardContent,
 } from '../components/ui/card';
 import { CommentItem } from '../components/CommentItem';
+import {
+  PostDetailSkeleton,
+  CommentItemSkeleton,
+} from '../components/PostDetailSkeleton';
+
+const SKELETON_COMMENT_COUNT = 3;
 
 export function PostDetailPage() {
-  // Get the postId from the URL parameters
   const { postId: postIdStr } = useParams<{ postId: string }>();
   const postId = postIdStr ? parseInt(postIdStr) : undefined;
 
-  // Handle invalid/missing ID
   if (!postId) {
     return <div className="p-8 text-red-500">Invalid Post ID.</div>;
   }
@@ -31,19 +35,21 @@ export function PostDetailPage() {
     queryFn: () => fetchComments(postId),
   });
 
-  // Loading states
+  // Primary loading state
+  // Show full page skeleton while post data is fetching
   if (postQuery.isLoading) {
-    return (
-      <div className="p-8 text-center text-xl">Loading post details...</div>
-    );
+    // Show the full page skeleton while the main post data is loading
+    return <PostDetailSkeleton />;
   }
+
   if (postQuery.isError) {
     return (
-      <div className="p-8 text-red-600">
+      <div className="p-8 text-red-600 text-center">
         Error loading post: {postQuery.error.message}
       </div>
     );
   }
+
   const post = postQuery.data;
 
   return (
@@ -52,7 +58,8 @@ export function PostDetailPage() {
         {post?.title}
       </h1>
 
-      {/* Post card */}
+      {/* Content is ready */}
+      {/* Post Card*/}
       <Card className="mb-12 shadow-lg">
         <CardHeader>
           <CardTitle className="text-2xl">{post?.title}</CardTitle>
@@ -67,27 +74,28 @@ export function PostDetailPage() {
 
       {/* Comments section */}
       <h2 className="text-3xl font-bold mb-6 border-b pb-2">Comments</h2>
-      {commentsQuery.isLoading && (
-        <div className="text-center text-lg text-gray-500">
-          Loading comments...
-        </div>
-      )}
-      {commentsQuery.isError && (
-        <div className="text-red-500">
-          Error loading comments: {commentsQuery.error.message}
-        </div>
-      )}
 
-      {commentsQuery.data && (
-        <div className="space-y-6">
-          {commentsQuery.data.map(comment => (
+      <div className="space-y-6">
+        {commentsQuery.isLoading ? (
+          // Secondary loading state
+          // Show comment skeletons while comments are fetching
+          Array.from({ length: SKELETON_COMMENT_COUNT }).map((_, index) => (
+            <CommentItemSkeleton key={index} />
+          ))
+        ) : commentsQuery.isError ? (
+          <div className="text-red-500 text-center p-4 border border-red-200 bg-red-50 rounded-md">
+            Error loading comments: {commentsQuery.error.message}
+          </div>
+        ) : (
+          // Comments data
+          commentsQuery.data?.map(comment => (
             <CommentItem
               key={comment.id}
               comment={comment}
             />
-          ))}
-        </div>
-      )}
+          ))
+        )}
+      </div>
     </div>
   );
 }
