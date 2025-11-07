@@ -103,6 +103,9 @@ This project is a clean, scalable application demonstrating modern front-end dev
   - Create a page to fetch post and its comments (`PostDetailPage.tsx`).
   - Update `App.tsx` to use React Router.
   - Add React Router `Link` component to navigate to the detail page (`PostCard.tsx`).
+- Step #2 (Add shadcn skeleton component to posts and comments's loading state):
+  - Create a component to define shadcn skeleton (`PostDetailSkeleton.tsx`).
+  - Update the page logic to conditionally render the skeletons (`PostDetailPage.tsx`).
 - `// In progress...`
 
 ## Features
