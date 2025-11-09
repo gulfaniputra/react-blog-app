@@ -12,6 +12,9 @@ import {
   PostDetailSkeleton,
   CommentItemSkeleton,
 } from '../components/PostDetailSkeleton';
+import { CreateCommentForm } from '../components/CreateCommentForm';
+import { useCreateComment } from '../hooks/useCreateComment';
+import type { CreateCommentPayload } from '../api/posts';
 
 const SKELETON_COMMENT_COUNT = 3;
 
@@ -22,6 +25,14 @@ export function PostDetailPage() {
   if (!postId) {
     return <div className="p-8 text-red-500">Invalid Post ID.</div>;
   }
+
+  // Use the mutation hook
+  const createCommentMutation = useCreateComment(postId);
+
+  // Handle the form submission
+  const handleCommentSubmit = async (values: CreateCommentPayload) => {
+    await createCommentMutation.mutateAsync({ postId: postId!, data: values });
+  };
 
   // Fetch the post data
   const postQuery = useQuery({
@@ -72,7 +83,15 @@ export function PostDetailPage() {
         </CardContent>
       </Card>
 
-      {/* Comments section */}
+      {/* Comment section */}
+      <div className="mb-12">
+        <CreateCommentForm
+          postId={postId}
+          onSubmit={handleCommentSubmit}
+          isSubmitting={createCommentMutation.isPending}
+        />
+      </div>
+
       <h2 className="text-3xl font-bold mb-6 border-b pb-2">Comments</h2>
 
       <div className="space-y-6">
