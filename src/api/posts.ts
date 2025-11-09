@@ -59,3 +59,30 @@ export async function fetchComments(postId: number): Promise<Comment[]> {
   }
   return response.json();
 }
+
+// Interface for the data sent by the form
+export interface CreateCommentPayload {
+  name: string;
+  email: string;
+  body: string;
+}
+
+// Function signature for POST /posts/:postId/comments
+export async function createComment(
+  postId: number,
+  commentData: CreateCommentPayload
+): Promise<Comment> {
+  const response = await fetch(`${BASE_URL}/posts/${postId}/comments`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ ...commentData, postId, id: Date.now() }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to post comment');
+  }
+
+  return (await response.json()) as Comment;
+}
