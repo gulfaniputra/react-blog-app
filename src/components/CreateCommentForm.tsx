@@ -14,7 +14,6 @@ interface CreateCommentFormProps {
 }
 
 export function CreateCommentForm({
-  postId,
   onSubmit,
   isSubmitting,
 }: CreateCommentFormProps) {
