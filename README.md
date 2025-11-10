@@ -124,7 +124,24 @@ This project is a clean, scalable application demonstrating modern front-end dev
   - Create a hook to handle comment submission (`useCreateComment.ts`).
   - Create Formik component with basic validation (`CreateCommentForm.tsx`).
   - Integrate the form and mutation hook into the post detail page (`PostDetailPage.tsx`).
-- `// In progress...`
+- Step #4 (Add form validation by integrating Yup to Formik with an error alert):
+  - [Mockup](https://gist.github.com/user-attachments/assets/f93ceb32-876a-4d5b-be27-891b2ca0f742)
+  - Components:
+    - Create post form component:
+      - `CreatePostDialog`
+        - `CreatePostForm`
+          - `Input` (Title)
+          - `Textarea` (Body)
+          - `Button` (Submit)
+    - Create comment form component:
+      - `PostDetailPage`
+        - `CreateCommentForm`
+          - `Input` (Name/Email)
+          - `Textarea` (Body)
+          - `Button` (Submit)
+  - Install Yup and define its schemas (`validationSchemas.ts`).
+  - Replace the basic `validate` function with Yup `validationSchema` (`CreatePostForm.tsx`).
+  - Replace the basic `validate` function with Yup `validationSchema` (`CreateCommentForm.tsx`).
 
 ## Features
 
