@@ -11,6 +11,7 @@ export function Header({ onCreatePostClick }: HeaderProps) {
       <Button
         variant="default"
         onClick={onCreatePostClick}
+        className="cursor-pointer"
       >
         Create Post
       </Button>

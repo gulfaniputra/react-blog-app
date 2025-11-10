@@ -16,7 +16,7 @@ export function CreatePostDialog({
   onPostCreate,
   isSubmitting,
 }: CreatePostDialogProps) {
-  // Wrapper function to handle submission and close the dialog
+  // Wrapper function to handle submission & close the dialog
   const handleSubmit = async (values: CreatePostPayload) => {
     await onPostCreate(values);
   };
@@ -32,7 +32,7 @@ export function CreatePostDialog({
         </DialogHeader>
 
         <CreatePostForm
-          onSubmit={handleSubmit}
+          onPostCreate={handleSubmit}
           onCancel={() => onOpenChange(false)}
           isSubmitting={isSubmitting}
         />
