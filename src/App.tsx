@@ -2,12 +2,14 @@ import { HomePage } from './pages/HomePage';
 import { Header } from './components/Header';
 import { PostDetailPage } from './pages/PostDetailPage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'sonner';
 
 export default function App() {
   // Provide a default handler for 'Header'
   const handleCreatePostClick = () => {};
   return (
     <Router>
+      <Toaster />
       <Header onCreatePostClick={handleCreatePostClick} />
 
       <Routes>
