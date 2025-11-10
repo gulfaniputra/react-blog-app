@@ -4,51 +4,39 @@ import { Textarea } from './ui/textarea';
 import { Button } from './ui/button';
 import { Label } from './ui/label';
 import type { CreatePostPayload } from '../api/posts';
+import { CreatePostSchema } from '../schemas/validationSchemas';
+import type { CreatePostFormValues } from '../schemas/validationSchemas';
+import { Loader2 } from 'lucide-react';
 
-interface CreatePostFormProps {
-  // A prop to handle the form submission
-  onSubmit: (values: CreatePostPayload) => Promise<void>;
-  // A prop to handle closing the dialog
+interface CreatePostDialogProps {
+  onPostCreate: (values: CreatePostPayload) => Promise<void>;
   onCancel: () => void;
-  // A prop to show loading state
   isSubmitting: boolean;
 }
 
 export function CreatePostForm({
-  onSubmit,
+  onPostCreate,
   onCancel,
   isSubmitting,
-}: CreatePostFormProps) {
-  // Initialize Formik hook
-  const formik = useFormik<CreatePostPayload>({
-    initialValues: {
-      title: '',
-      body: '',
-    },
-
-    onSubmit: async values => {
-      await onSubmit(values);
-      formik.resetForm();
-    },
-
-    // Simple manual validation
-    // Replace with Zod/Yup later for scalability
-    validate: values => {
-      const errors: Partial<CreatePostPayload> = {};
-      if (!values.title) {
-        errors.title = 'Title is required';
-      } else if (values.title.length < 5) {
-        errors.title = 'Title must be at least 5 characters';
-      }
-      if (!values.body) {
-        errors.body = 'Description is required';
-      }
-      return errors;
+}: CreatePostDialogProps) {
+  const formik = useFormik<CreatePostFormValues>({
+    initialValues: { title: '', body: '' },
+    validationSchema: CreatePostSchema,
+    onSubmit: async (values, { resetForm }) => {
+      // Formik's validation ensures data is clean before calling API
+      await onPostCreate(values);
+      resetForm();
     },
   });
 
+  // Helper function for rendering the validation alert
+  const renderError = (field: keyof CreatePostFormValues) =>
+    formik.touched[field] && formik.errors[field] ? (
+      // The alert UI below the field
+      <p className="text-red-500 text-xs mt-1">{formik.errors[field]}</p>
+    ) : null;
+
   return (
-    // Attach 'formik.handleSubmit' to the form
     <form onSubmit={formik.handleSubmit}>
       <div className="grid gap-4 py-4">
         {/* Title field */}
@@ -63,21 +51,17 @@ export function CreatePostForm({
             <Input
               id="title"
               name="title"
-              placeholder="Enter post title"
-              // Bind value and change handler
+              placeholder="Post Title"
               value={formik.values.title}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               disabled={isSubmitting}
             />
-            {/* Show validation error */}
-            {formik.touched.title && formik.errors.title ? (
-              <p className="text-red-500 text-xs mt-1">{formik.errors.title}</p>
-            ) : null}
+            {renderError('title')}
           </div>
         </div>
 
-        {/* Body field */}
+        {/* Description/body field */}
         <div className="grid grid-cols-4 items-start gap-4">
           <Label
             htmlFor="body"
@@ -89,23 +73,18 @@ export function CreatePostForm({
             <Textarea
               id="body"
               name="body"
-              placeholder="Enter post description/body"
+              placeholder="Post Body Content"
               rows={5}
-              // Bind value & change handler
               value={formik.values.body}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               disabled={isSubmitting}
             />
-            {/* Show validation error */}
-            {formik.touched.body && formik.errors.body ? (
-              <p className="text-red-500 text-xs mt-1">{formik.errors.body}</p>
-            ) : null}
+            {renderError('body')}
           </div>
         </div>
       </div>
 
-      {/* Form actions*/}
       <div className="flex justify-end space-x-2 mt-4">
         <Button
           type="button"
@@ -115,12 +94,15 @@ export function CreatePostForm({
         >
           Cancel
         </Button>
-        {/* Submit button */}
         <Button
           type="submit"
           disabled={!formik.isValid || isSubmitting}
         >
-          {isSubmitting ? 'Creating...' : 'Create Post'}
+          {isSubmitting ? (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            'Create Post'
+          )}
         </Button>
       </div>
     </form>
