@@ -106,6 +106,24 @@ This project is a clean, scalable application demonstrating modern front-end dev
 - Step #2 (Add shadcn skeleton component to posts and comments's loading state):
   - Create a component to define shadcn skeleton (`PostDetailSkeleton.tsx`).
   - Update the page logic to conditionally render the skeletons (`PostDetailPage.tsx`).
+- Step #3 (Add a text box to create comment with loading indicator and shadcn toast component):
+  - [Mockup](https://gist.github.com/user-attachments/assets/237f44a8-600b-4f7a-a247-b393eae3319a)
+  - Components:
+    - `PostDetailPage`
+    - `CommentsSection`
+    - `CreateCommentSection`
+      - `CreateCommentForm`
+        - `FormField` (Name)
+        - `FormField` (Email)
+        - `FormField` (Body)
+        - `SubmitButton`
+  - API mappings:
+    - `CommentsSection` > `POST https://jsonplaceholder.typicode.com/posts/:postId/comments`
+    - `CreateCommentForm` > `POST https://jsonplaceholder.typicode.com/posts/:postId/comments`
+  - Define `createComment` API function (`posts.ts`).
+  - Create a hook to handle comment submission (`useCreateComment.ts`).
+  - Create Formik component with basic validation (`CreateCommentForm.tsx`).
+  - Integrate the form and mutation hook into the post detail page (`PostDetailPage.tsx`).
 - `// In progress...`
 
 ## Features
